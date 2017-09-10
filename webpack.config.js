@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = {
   entry: './map.js',
   output: {
-    libraryTarget: 'var',
+    libraryTarget: 'window',
     library: 'KotusMap',
     filename: 'build/map-component.js'
   },
