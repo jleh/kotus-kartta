@@ -4,7 +4,7 @@ module.exports = {
   entry: './map.js',
   output: {
     libraryTarget: 'var',
-    library: 'NadigiMap',
+    library: 'KotusMap',
     filename: 'build/map-component.js'
   },
   module: {
