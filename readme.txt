@@ -7,4 +7,4 @@ var options = {
     mapId: "" // Näytä vain kyseisen id:n keruukartta
 };
 
-NadigiMap.init('map-div', options);
+KotusMap.init('map-div', options);
