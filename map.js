@@ -1,9 +1,11 @@
 require('proj4leaflet');
 var L = require('leaflet-mml-layers');
-
-var leafletMap;
+require('leaflet.markercluster');
 
 require('leaflet/dist/leaflet.css');
+require('leaflet.markercluster/dist/MarkerCluster.Default.css');
+
+var leafletMap;
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
@@ -11,27 +13,32 @@ L.Marker.prototype.options.icon = L.icon({
 });
 
 var LAYERS = {
-  openstreetmap: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  })
+  //openstreetmap: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+  //  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  //}),
+  Maastokartta: L.tileLayer.mml_wmts({ layer: "maastokartta" }),
+  Taustakartta: L.tileLayer.mml_wmts({ layer: "taustakartta" }),
+  Ilmakuva: L.tileLayer.mml("Ortokuva_3067")
 };
 
 /*
 Options
- - latlng
+ - locations
  - mapId
  - years
 */
 
 export function init(divId, options) {
   leafletMap = L.map(divId, {
-    crs: L.TileLayer.MML.get3067Proj()
+    crs: L.TileLayer.MML.get3067Proj(),
+    layers: [ LAYERS.Taustakartta ]
   })
-  .setView([options.latlng[0], options.latlng[1]], 10);
+  .setView([ 65, 25 ], 2);
 
-  leafletMap.addLayer(LAYERS.openstreetmap);
-  leafletMap.addLayer(createKotusLayer(options));
-  L.marker([options.latlng[0], options.latlng[1]]).addTo(leafletMap);
+  createMarkers(options.locations);
+
+  var kotusLayer = createKotusLayer(options);
+  L.control.layers(LAYERS, { Keruukartat: kotusLayer }).addTo(leafletMap);
 }
 
 function createKotusLayer(options) {
@@ -47,4 +54,18 @@ function createKotusLayer(options) {
   }
 
   return L.tileLayer.wms('https://avoin-test.csc.fi/geoserver/kotus/wms', wmsOptions);
+}
+
+function createMarkers(locations) {
+  var markerLayer = L.markerClusterGroup({ maxClusterRadius: 40 });
+  // var markerLayer = L.featureGroup();
+
+  locations.forEach(function(location) {
+    var marker = L.marker([ location.lat, location.lon ]).addTo(markerLayer);
+
+    marker.bindPopup(location.text);
+  });
+
+  markerLayer.addTo(leafletMap);
+  leafletMap.fitBounds(markerLayer.getBounds(), { maxZoom: 12 });
 }

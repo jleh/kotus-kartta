@@ -5,7 +5,7 @@ module.exports = {
   output: {
     libraryTarget: 'var',
     library: 'NadigiMap',
-    filename: 'build/map-bundle.js'
+    filename: 'build/map-component.js'
   },
   module: {
     rules: [
