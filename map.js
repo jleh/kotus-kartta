@@ -38,6 +38,11 @@ export function init(divId, options) {
   createMarkers(options.locations);
 
   var kotusLayer = createKotusLayer(options);
+
+  if (options.keruukartat) {
+    kotusLayer.addTo(leafletMap);
+  }
+
   L.control.layers(LAYERS, { Keruukartat: kotusLayer }).addTo(leafletMap);
 }
 
@@ -46,11 +51,13 @@ function createKotusLayer(options) {
     layers: 'kotus:new_tif',
     format: 'image/png',
     transparent: true,
-    elevation: options.mapId ? options.mapId : '1/100000'
+    elevation: options.mapId ? options.mapId : '1/1000000'
   };
 
   if (options.years) {
     wmsOptions['time'] = options.years[0] + '-1-1/' + options.years[1] + '-1-1'
+  } else  {
+    wmsOptions['time'] = '1900-1-1/2000-1-1'
   }
 
   return L.tileLayer.wms('https://avoin-test.csc.fi/geoserver/kotus/wms', wmsOptions);
