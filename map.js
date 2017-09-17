@@ -7,11 +7,6 @@ require('leaflet.markercluster/dist/MarkerCluster.Default.css');
 
 var leafletMap;
 
-L.Marker.prototype.options.icon = L.icon({
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-});
-
 var LAYERS = {
   //openstreetmap: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
   //  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -29,6 +24,8 @@ Options
 */
 
 export function init(divId, options) {
+  initializeIcons(options);
+
   leafletMap = L.map(divId, {
     crs: L.TileLayer.MML.get3067Proj(),
     layers: [ LAYERS.Taustakartta ]
@@ -45,6 +42,13 @@ export function init(divId, options) {
 
   L.control.layers(LAYERS, { Keruukartat: kotusLayer }).addTo(leafletMap);
 }
+
+function initializeIcons(options) {
+  L.Marker.prototype.options.icon = L.icon({
+    iconUrl: options.imagePath + '/marker-icon.png' || require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: options.imagePath + '/marker-shadow.png' || require('leaflet/dist/images/marker-shadow.png')
+  });
+} 
 
 function createKotusLayer(options) {
   var wmsOptions = {
