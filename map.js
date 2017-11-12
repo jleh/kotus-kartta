@@ -52,7 +52,7 @@ function initializeIcons(options) {
 
 function createKotusLayer(options) {
   var wmsOptions = {
-    layers: 'kotus:new_tif',
+    layers: 'kotus:nadigi',
     format: 'image/png',
     transparent: true,
     elevation: options.mapId ? options.mapId : '1/1000000'
@@ -64,7 +64,7 @@ function createKotusLayer(options) {
     wmsOptions['time'] = '1900-1-1/2000-1-1'
   }
 
-  return L.tileLayer.wms('https://avoin-test.csc.fi/geoserver/kotus/wms', wmsOptions);
+  return L.tileLayer.wms('https://avaa.tdata.fi/geoserver/kotus/wms', wmsOptions);
 }
 
 function createMarkers(locations) {
