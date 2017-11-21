@@ -45,8 +45,8 @@ export function init(divId, options) {
 
 function initializeIcons(options) {
   L.Marker.prototype.options.icon = L.icon({
-    iconUrl: options.imagePath + '/marker-icon.png' || require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: options.imagePath + '/marker-shadow.png' || require('leaflet/dist/images/marker-shadow.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
     iconAnchor: [12, 40]
   });
 } 

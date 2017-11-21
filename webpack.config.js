@@ -21,14 +21,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-        //    options: {
-        //      outputPath: './build/'
-        //     }
-          }
-        ]
+        use: [ { loader: 'base64-inline-loader' } ]
       }
     ]
   },
