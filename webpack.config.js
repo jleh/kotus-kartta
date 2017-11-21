@@ -1,11 +1,14 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './map.js',
+//  devtool: 'source-map',
   output: {
     libraryTarget: 'window',
     library: 'KotusMap',
-    filename: 'build/map-component.js'
+    filename: 'map-component.js',
+    path: __dirname + '/build'
   },
   module: {
     rules: [
@@ -21,12 +24,17 @@ module.exports = {
         use: [
           {
             loader: 'file-loader',
-            options: {
-              outputPath: './build/'
-            }
+        //    options: {
+        //      outputPath: './build/'
+        //     }
           }
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': { 'NODE_ENV': JSON.stringify('production') }
+    })
+  ]
 }
