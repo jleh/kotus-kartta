@@ -36,7 +36,7 @@ export function init(divId, options) {
 
   var kotusLayer = createKotusLayer(options);
 
-  if (options.keruukartat) {
+  if (!options.hideKeruukartat) {
     kotusLayer.addTo(leafletMap);
   }
 
