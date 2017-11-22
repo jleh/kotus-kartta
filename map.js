@@ -5,6 +5,10 @@ require('leaflet.markercluster');
 require('leaflet/dist/leaflet.css');
 require('leaflet.markercluster/dist/MarkerCluster.Default.css');
 
+require('./map.css');
+
+var confirmLocation = require('./locationConfirm');
+
 var leafletMap;
 
 var LAYERS = {
@@ -70,12 +74,11 @@ function createKotusLayer(options) {
 
 function createMarkers(locations) {
   var markerLayer = L.markerClusterGroup({ maxClusterRadius: 40 });
-  // var markerLayer = L.featureGroup();
 
   locations.forEach(function(location) {
     var marker = L.marker([ location.lat, location.lon ]).addTo(markerLayer);
-
-    marker.bindPopup(location.text);
+    
+    marker.bindPopup(confirmLocation.getMarkerContent(marker, location.text));
   });
 
   markerLayer.addTo(leafletMap);

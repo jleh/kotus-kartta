@@ -22,7 +22,8 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: [ { loader: 'base64-inline-loader' } ]
-      }
+      },
+      { test: /\.hbs$/, loader: 'handlebars-loader' }
     ]
   },
   plugins: [

@@ -1,0 +1,18 @@
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.confirm-marker {
+  font-size: 1.5em;
+  width: 1em;
+  height: 0.5em;
+  display: inline-block;
+}
+
+.confirm-label {
+  cursor: pointer;
+}
