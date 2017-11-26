@@ -3,7 +3,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: './map.js',
-//  devtool: 'source-map',
+  devtool: 'source-map',
   output: {
     libraryTarget: 'window',
     library: 'KotusMap',

@@ -16,3 +16,39 @@
 .confirm-label {
   cursor: pointer;
 }
+
+.relocation-dialog {
+  position: absolute;
+  bottom: 0;
+  z-index: 1000;
+  min-height: 7em;
+  padding: 1em;
+  background-color: #fff;
+  cursor: initial;
+}
+
+.add-comment {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+
+.comment-text {
+  display: none;
+}
+
+.cancel-button {
+  border: 2px solid #0066cc;
+  background: #fff;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+  cursor: pointer;
+}
+
+.save-button {
+  border: 2px solid #0066cc;
+  background: #0066cc;
+  color: #fff;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+  cursor: pointer;
+}
+

@@ -10,6 +10,7 @@ require('./map.css');
 var confirmLocation = require('./locationConfirm');
 
 var leafletMap;
+var relocationOptions;
 
 var LAYERS = {
   //openstreetmap: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -28,6 +29,9 @@ Options
 */
 
 export function init(divId, options) {
+  relocationOptions = options.relocationOptions;
+  confirmLocation.setOptions(relocationOptions);
+
   initializeIcons(options);
 
   leafletMap = L.map(divId, {
@@ -78,7 +82,10 @@ function createMarkers(locations) {
   locations.forEach(function(location) {
     var marker = L.marker([ location.lat, location.lon ]).addTo(markerLayer);
     
-    marker.bindPopup(confirmLocation.getMarkerContent(marker, location.text));
+    if (relocationOptions)
+      marker.bindPopup(confirmLocation.getMarkerContent(marker, location));
+    else
+      marker.bindPopup(location.text);
   });
 
   markerLayer.addTo(leafletMap);
