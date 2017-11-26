@@ -26,17 +26,19 @@ function correctLocationConfirmed(data, marker) {
 };
 
 function incorrectLocationConfirmed(data) {
-  if (relocationStarted)
+  if (relocationStarted) {
     cancelRelocation();
+  }
 
-  if (options.incorrectLocationConfirmed)
+  if (options.incorrectLocationConfirmed) {
     options.incorrectLocationConfirmed(data.title);
+  }
 
   this.closePopup();
   this.dragging.enable();
   createOriginalPositionMarker(this);
   relocationStarted = true;
-  
+
   relocationDialog = L.DomUtil.create('div', 'relocation-dialog', this._map.getContainer());
   relocationDialog.innerHTML = relocateMarker();
   relocationDialog.getElementsByClassName('add-comment')[0].onclick = enableComment.bind(relocationDialog);
@@ -59,7 +61,7 @@ function cancelRelocation() {
 
 function saveLocation(data, marker) {
   var comment = relocationDialog.getElementsByClassName('comment-text')[0].value;
-  
+
   options.saveLocation({
     comment: comment,
     id: data.title,

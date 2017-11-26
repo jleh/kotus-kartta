@@ -13,12 +13,9 @@ var leafletMap;
 var relocationOptions;
 
 var LAYERS = {
-  //openstreetmap: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  //  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  //}),
-  Maastokartta: L.tileLayer.mml_wmts({ layer: "maastokartta" }),
-  Taustakartta: L.tileLayer.mml_wmts({ layer: "taustakartta" }),
-  Ilmakuva: L.tileLayer.mml("Ortokuva_3067")
+  Maastokartta: L.tileLayer.mml_wmts({ layer: 'maastokartta' }),
+  Taustakartta: L.tileLayer.mml_wmts({ layer: 'taustakartta' }),
+  Ilmakuva: L.tileLayer.mml('Ortokuva_3067')
 };
 
 /*
@@ -37,8 +34,7 @@ export function init(divId, options) {
   leafletMap = L.map(divId, {
     crs: L.TileLayer.MML.get3067Proj(),
     layers: [ LAYERS.Taustakartta ]
-  })
-  .setView([ 65, 25 ], 2);
+  }).setView([ 65, 25 ], 2);
 
   createMarkers(options.locations);
 
@@ -57,7 +53,7 @@ function initializeIcons(options) {
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
     iconAnchor: [12, 40]
   });
-} 
+}
 
 function createKotusLayer(options) {
   var wmsOptions = {
@@ -68,9 +64,9 @@ function createKotusLayer(options) {
   };
 
   if (options.years) {
-    wmsOptions['time'] = options.years[0] + '-1-1/' + options.years[1] + '-1-1'
-  } else  {
-    wmsOptions['time'] = '1900-1-1/2000-1-1'
+    wmsOptions['time'] = options.years[0] + '-1-1/' + options.years[1] + '-1-1';
+  } else {
+    wmsOptions['time'] = '1900-1-1/2000-1-1';
   }
 
   return L.tileLayer.wms('https://avaa.tdata.fi/geoserver/kotus/wms', wmsOptions);
@@ -81,11 +77,12 @@ function createMarkers(locations) {
 
   locations.forEach(function(location) {
     var marker = L.marker([ location.lat, location.lon ]).addTo(markerLayer);
-    
-    if (relocationOptions)
+
+    if (relocationOptions) {
       marker.bindPopup(confirmLocation.getMarkerContent(marker, location));
-    else
+    } else {
       marker.bindPopup(location.text);
+    }
   });
 
   markerLayer.addTo(leafletMap);
