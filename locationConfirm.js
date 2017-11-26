@@ -7,6 +7,7 @@ var relocateMarker = require('./templates/relocateMarker.hbs');
 var relocationStarted = false;
 var options;
 var relocationDialog;
+var originalPosition;
 
 function getMarkerContent(marker, data) {
   var div = document.createElement('div');
@@ -32,13 +33,15 @@ function incorrectLocationConfirmed(data) {
     options.incorrectLocationConfirmed(data.title);
 
   this.closePopup();
+  this.dragging.enable();
+  createOriginalPositionMarker(this);
   relocationStarted = true;
   
   relocationDialog = L.DomUtil.create('div', 'relocation-dialog', this._map.getContainer());
   relocationDialog.innerHTML = relocateMarker();
   relocationDialog.getElementsByClassName('add-comment')[0].onclick = enableComment.bind(relocationDialog);
   relocationDialog.getElementsByClassName('cancel-button')[0].onclick = cancelRelocation;
-  relocationDialog.getElementsByClassName('save-button')[0].onclick = saveLocation.bind(relocationDialog, data);
+  relocationDialog.getElementsByClassName('save-button')[0].onclick = saveLocation.bind(relocationDialog, data, this);
 
   L.DomEvent.disableClickPropagation(relocationDialog);
 }
@@ -51,17 +54,31 @@ function enableComment() {
 }
 
 function cancelRelocation() {
-  relocationStarted = false;
-  L.DomUtil.remove(relocationDialog);
+  reset();
 }
 
-function saveLocation(data) {
+function saveLocation(data, marker) {
   var comment = relocationDialog.getElementsByClassName('comment-text')[0].value;
   
-  options.saveLocation({ comment: comment, id: data.title });
+  options.saveLocation({
+    comment: comment,
+    id: data.title,
+    location: {
+      lat: marker.getLatLng().lat,
+      lon: marker.getLatLng().lng
+    }
+  });
+  reset();
+}
 
+function reset() {
   relocationStarted = false;
-  L.DomUtil.remove(this);
+  L.DomUtil.remove(relocationDialog);
+  originalPosition.remove();
+}
+
+function createOriginalPositionMarker(marker) {
+  originalPosition = L.circleMarker(marker.getLatLng()).addTo(marker._map);
 }
 
 function getContent(ctx) {
