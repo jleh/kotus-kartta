@@ -38,13 +38,21 @@ export function init(divId, options) {
 
   createMarkers(options.locations);
 
-  var kotusLayer = createKotusLayer(options);
+  var kotusLayer1 = createKotusLayer(options, false);
+  var kotusLayer2 = createKotusLayer(options, true);
 
-  if (!options.hideKeruukartat) {
-    kotusLayer.addTo(leafletMap);
+  if (!options.hideKeruukartat && !options.withBorders) {
+    kotusLayer1.addTo(leafletMap);
   }
 
-  L.control.layers(LAYERS, { Keruukartat: kotusLayer }).addTo(leafletMap);
+  if (!options.hideKeruukartat && options.withBorders) {
+    kotusLayer2.addTo(leafletMap);
+  }
+
+  L.control.layers(LAYERS, {
+    Keruukartat: kotusLayer1,
+    'Keruukartat reunoilla': kotusLayer2
+  }).addTo(leafletMap);
 }
 
 function initializeIcons(options) {
@@ -55,9 +63,9 @@ function initializeIcons(options) {
   });
 }
 
-function createKotusLayer(options) {
+function createKotusLayer(options, withBorders) {
   var wmsOptions = {
-    layers: options.withBorders ? 'kotus:nadigi' : 'kotus:nadigi2',
+    layers: withBorders ? 'kotus:nadigi' : 'kotus:nadigi2',
     format: 'image/png',
     transparent: true,
     elevation: options.mapId ? options.mapId : '1/1000000'
