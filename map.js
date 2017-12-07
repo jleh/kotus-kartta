@@ -57,7 +57,7 @@ function initializeIcons(options) {
 
 function createKotusLayer(options) {
   var wmsOptions = {
-    layers: 'kotus:nadigi',
+    layers: options.withBorders ? 'kotus:nadigi' : 'kotus:nadigi2',
     format: 'image/png',
     transparent: true,
     elevation: options.mapId ? options.mapId : '1/1000000'
