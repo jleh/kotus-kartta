@@ -60,7 +60,8 @@ function initializeIcons(options) {
   L.Marker.prototype.options.icon = L.icon({
     iconUrl: require('leaflet/dist/images/marker-icon.png'),
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-    iconAnchor: [12, 40]
+    iconAnchor: [12, 40],
+    popupAnchor: [0, -40]
   });
 }
 

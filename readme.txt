@@ -23,7 +23,7 @@ KotusMap.getBounds()
 // Uusi paikkamerkintä
 KotusMap.newLocation({
     div: 'form-div-id',
-    location: [62, 25], // Optional
+    location: [62, 25], // Optional, kartta keskittyy tähän jos annettu
     save: function(data) { console.log(data); },
     cancel: function() { console.log('cancel'); }
 });
