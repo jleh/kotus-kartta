@@ -25,7 +25,7 @@ Options
  - years
 */
 
-export function init(divId, options) {
+function init(divId, options) {
   relocationOptions = options.relocationOptions;
   confirmLocation.setOptions(relocationOptions);
 
@@ -96,3 +96,10 @@ function createMarkers(locations) {
   markerLayer.addTo(leafletMap);
   leafletMap.fitBounds(markerLayer.getBounds(), { maxZoom: 12 });
 }
+
+function getBounds() {
+  return leafletMap.getBounds().toBBoxString();
+}
+
+module.exports.init = init;
+module.exports.getBounds = getBounds;
