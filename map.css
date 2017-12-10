@@ -52,3 +52,16 @@
   cursor: pointer;
 }
 
+.new-location-form-control {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.new-location-form-control label {
+  display: block;
+}
+
+.new-location-map {
+  height: 400px;
+  width: 100%;
+}

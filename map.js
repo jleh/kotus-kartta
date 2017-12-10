@@ -8,6 +8,7 @@ require('leaflet.markercluster/dist/MarkerCluster.Default.css');
 require('./map.css');
 
 var confirmLocation = require('./locationConfirm');
+var addNewLocation = require('./addNewLocation');
 
 var leafletMap;
 var relocationOptions;
@@ -101,5 +102,10 @@ function getBounds() {
   return leafletMap.getBounds().toBBoxString();
 }
 
+function newLocation(options) {
+  addNewLocation(options);
+}
+
 module.exports.init = init;
 module.exports.getBounds = getBounds;
+module.exports.newLocation = newLocation;
